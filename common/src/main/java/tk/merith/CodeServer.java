@@ -34,13 +34,14 @@ public class CodeServer {
         if (hostOS.contains("linux")) {
             supportedHost = true;
         }
+        supportedArch = true;
         switch (arch) {
-            case "x86_64", "amd64", "arm64", "armhf" -> {
-                supportedArch = true;
-                arch = "amd64";
-            }
+            case "x86_64", "amd64" -> arch = "amd64";
+            case "aarch64" -> arch = "arm64";
+            case "armhf" -> arch = "armv7l";
             default -> supportedArch = false;
         }
+
 
         LOGGER.warn("Host: [" + hostOS + "]: " + supportedHost);
         LOGGER.warn("Arch: [" + arch + "]: " + supportedArch);
@@ -69,6 +70,7 @@ public class CodeServer {
                     "bash", codeServerDir.resolve("code-server.sh").toString(),
                     "--method", "standalone");
             installCMD.environment().put("HOME", codeServerDir.toAbsolutePath().toString());
+            installCMD.environment().put("VERSION", "");
             Execute.RunWait(installCMD);
         } catch (MalformedURLException e) {
             LOGGER.error("Failed to download code-server install script");
