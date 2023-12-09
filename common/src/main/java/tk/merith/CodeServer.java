@@ -1,5 +1,9 @@
 package tk.merith;
 
+import dev.architectury.event.events.common.LifecycleEvent;
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.Env;
+import net.fabricmc.api.EnvType;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +29,15 @@ public class CodeServer {
         LOGGER.info("NOTICE: This mod is in early development and may not work as expected.");
         String hostOS = System.getProperty("os.name").toLowerCase();
         String arch = System.getProperty("os.arch").toLowerCase();
+
+        Env env = Platform.getEnvironment();
+        if (env.toPlatform() == EnvType.CLIENT) {
+            return; //please no code server on client
+        }
+
+        LifecycleEvent.SERVER_STOPPED.register((server) -> {
+            stopCodeServer();
+        });
 
         // supported system
         // arch: x86_64 (amd64), arm64, armhf
