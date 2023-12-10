@@ -4,30 +4,30 @@ loaderVersion = "[45,)"
 license = "Insert License Here"
 
 [[mods]]
-modId = "examplemod"
+modId = "code-server"
 version = "${version}"
-displayName = "Example Mod"
-authors = "Me!"
+displayName = "Code Server"
+authors = "Merith.TK"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+CodeServer for MC Servers! (does not work on clients)
 '''
 #logoFile = ""
 
-[[dependencies.examplemod]]
+[[dependencies.code-server]]
 modId = "forge"
 mandatory = true
 versionRange = "[45,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.examplemod]]
+[[dependencies.code-server]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.19.4,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.examplemod]]
+[[dependencies.code-server]]
 modId = "architectury"
 mandatory = true
 versionRange = "[8.1.79,)"

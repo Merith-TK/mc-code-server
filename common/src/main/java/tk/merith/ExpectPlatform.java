@@ -16,8 +16,8 @@ public class ExpectPlatform {
      * <p>
      * Example:
      * Expect: tk.merith.ExampleExpectPlatform#getConfigDirectory()
-     * Actual Fabric: net.examplemod.fabric.ExampleExpectPlatformImpl#getConfigDirectory()
-     * Actual Forge: net.examplemod.forge.ExampleExpectPlatformImpl#getConfigDirectory()
+     * Actual Fabric: net.code-server.fabric.ExampleExpectPlatformImpl#getConfigDirectory()
+     * Actual Forge: net.code-server.forge.ExampleExpectPlatformImpl#getConfigDirectory()
      * <p>
      * <a href="https://plugins.jetbrains.com/plugin/16210-architectury">You should also get the IntelliJ plugin to help with @ExpectPlatform.</a>
      */

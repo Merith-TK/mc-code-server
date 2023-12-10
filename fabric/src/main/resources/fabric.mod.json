@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "id": "code-server",
   "version": "${version}",
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Code Server",
+  "description": "CodeServer for MC Servers! (does not work on clients)",
   "authors": [
-    "Me!"
+    "Merith.TK"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://modrinth.com/mod/code-server",
+    "sources": "https://github.com/Merith-TK/mc-code-server"
   },
-  "license": "Insert License Here",
+  "license": "MIT",
   "icon": "assets/code-server/icon.png",
   "environment": "*",
   "entrypoints": {
