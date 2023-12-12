@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "tk.merith.fabric.FabricEntrypoint"
+      "xyz.merith.fabric.FabricEntrypoint"
     ]
   },
   "depends": {

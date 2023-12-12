@@ -1,7 +1,7 @@
-package tk.merith.forge;
+package xyz.merith.forge;
 
 import dev.architectury.platform.forge.EventBuses;
-import tk.merith.CodeServer;
+import xyz.merith.CodeServer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 

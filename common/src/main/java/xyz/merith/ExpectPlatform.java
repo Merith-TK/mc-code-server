@@ -1,4 +1,4 @@
-package tk.merith;
+package xyz.merith;
 
 import dev.architectury.platform.Platform;
 
@@ -15,7 +15,7 @@ public class ExpectPlatform {
      * platform sub-package, with its class suffixed with {@code Impl}.
      * <p>
      * Example:
-     * Expect: tk.merith.ExampleExpectPlatform#getConfigDirectory()
+     * Expect: xyz.merith.ExampleExpectPlatform#getConfigDirectory()
      * Actual Fabric: net.code-server.fabric.ExampleExpectPlatformImpl#getConfigDirectory()
      * Actual Forge: net.code-server.forge.ExampleExpectPlatformImpl#getConfigDirectory()
      * <p>

@@ -1,4 +1,4 @@
-package tk.merith;
+package xyz.merith;
 
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.platform.Platform;
@@ -32,6 +32,7 @@ public class CodeServer {
 
         Env env = Platform.getEnvironment();
         if (env.toPlatform() == EnvType.CLIENT) {
+            LOGGER.error("Cannot run on Client");
             return; //please no code server on client
         }
 

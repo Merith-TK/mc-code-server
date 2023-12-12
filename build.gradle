@@ -1,6 +1,12 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.1-SNAPSHOT" apply false
+    id "io.github.pacifistmc.forgix" version "1.2.6"
+}
+
+forgix {
+    group = "xyz.merith.code-server" // This is the common group of the mod which by default in Architectury Template it's defined as "maven_group" in your gradle.properties. If this property is not defined then by default it'll fetch the group from the maven_group property in your gradle.properties
+    mergedJarName = "code-server" //
 }
 
 architectury {

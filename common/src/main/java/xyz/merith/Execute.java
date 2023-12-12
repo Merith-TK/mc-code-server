@@ -1,4 +1,4 @@
-package tk.merith;
+package xyz.merith;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
