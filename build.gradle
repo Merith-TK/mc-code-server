@@ -6,7 +6,7 @@ plugins {
 
 forgix {
     group = "xyz.merith.code-server" // This is the common group of the mod which by default in Architectury Template it's defined as "maven_group" in your gradle.properties. If this property is not defined then by default it'll fetch the group from the maven_group property in your gradle.properties
-    mergedJarName = "code-server" //
+    mergedJarName = "code-server-"+ rootProject.mod_version +".jar"
 }
 
 architectury {

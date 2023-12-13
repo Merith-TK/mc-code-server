@@ -25,14 +25,14 @@ public class CodeServer {
 
 
     public static void init() {
-        // TODO: if on client, `return;`
+        LOGGER.info("[CodeServer] Startup");
         LOGGER.info("NOTICE: This mod is in early development and may not work as expected.");
         String hostOS = System.getProperty("os.name").toLowerCase();
         String arch = System.getProperty("os.arch").toLowerCase();
 
         Env env = Platform.getEnvironment();
         if (env.toPlatform() == EnvType.CLIENT) {
-            LOGGER.error("Cannot run on Client");
+            LOGGER.error("[CodeServer] Cannot run on Client");
             return; //please no code server on client
         }
 
