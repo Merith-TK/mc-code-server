@@ -14,7 +14,10 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class CodeServer {
     public static final String MOD_ID = "code-server";
@@ -144,10 +147,21 @@ public class CodeServer {
     public static void startCodeServer() {
         LOGGER.info("Starting code-server");
         LOGGER.info("All command flags map to config.yaml values. (if a value is missing, you can add it to .code-server/.config/code-server/config.yaml)");
-        codeServerBuilder = Execute.NewCmd(codeServerDir.resolve(".local/bin/code-server").toString(), "./",
-                "--disable-telemetry",
-                "--disable-update-check"
-                );
+
+        String latestVersion = getLatestVersion();
+        if (latestVersion == null) {
+            LOGGER.error("Failed to find the latest version of code-server");
+            return;
+        }
+
+        Path codeServerNodePath = codeServerDir.resolve(".local/lib/code-server-" + latestVersion + "/lib/node");
+        Path codeServerPath = codeServerDir.resolve(".local/lib/code-server-" + latestVersion);
+
+        ProcessBuilder codeServerBuilder = Execute.NewCmd(
+            codeServerNodePath.toString(), codeServerPath.toString(),
+            "--disable-telemetry",
+            "--disable-update-check"
+    );
         try {
             // set HOME to codeServerDir full path
             codeServerBuilder.environment().put("HOME", codeServerDir.toAbsolutePath().toString());
@@ -166,6 +180,22 @@ public class CodeServer {
         } else {
             LOGGER.info("CodeServer is not running!");
             return false;
+        }
+    }
+
+    private static String getLatestVersion() {
+        try (Stream<Path> paths = Files.list(codeServerDir.resolve(".local/lib"))) {
+            Optional<String> latestVersion = paths
+                    .filter(Files::isDirectory)
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .filter(name -> name.startsWith("code-server-"))
+                    .map(name -> name.substring("code-server-".length()))
+                    .max(Comparator.naturalOrder());
+            return latestVersion.orElse(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
