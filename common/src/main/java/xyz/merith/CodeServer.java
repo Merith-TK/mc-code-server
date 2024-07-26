@@ -14,6 +14,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 public class CodeServer {
     public static final String MOD_ID = "code-server";
@@ -56,7 +57,41 @@ public class CodeServer {
             default -> supportedArch = false;
         }
 
+        // Java version
+        String javaVersion = System.getProperty("java.version");
+        LOGGER.warn("Java Version: [" + javaVersion + "]");
 
+        // User directory
+        String userDir = System.getProperty("user.dir");
+        LOGGER.warn("User Directory: [" + userDir + "]");
+
+        // User home
+        String userHome = System.getProperty("user.home");
+        LOGGER.warn("User Home: [" + userHome + "]");
+
+        // User name
+        String userName = System.getProperty("user.name");
+        LOGGER.warn("User Name: [" + userName + "]");
+
+        // Classpath
+        String classPath = System.getProperty("java.class.path");
+        LOGGER.warn("Classpath: [" + classPath + "]");
+
+        // Library path
+        String libPath = System.getProperty("java.library.path");
+        LOGGER.warn("Library Path: [" + libPath + "]");
+
+        // Temp directory
+        String tmpDir = System.getProperty("java.io.tmpdir");
+        LOGGER.warn("Temp Directory: [" + tmpDir + "]");
+
+        // Environment variables
+        Map<String, String> hostEnv = System.getenv();
+        for (Map.Entry<String, String> entry : hostEnv.entrySet()) {
+            LOGGER.warn("Env Var: [" + entry.getKey() + "] = [" + entry.getValue() + "]");
+        }
+
+        LOGGER.warn("");
         LOGGER.warn("Host: [" + hostOS + "]: " + supportedHost);
         LOGGER.warn("Arch: [" + arch + "]: " + supportedArch);
         if (!supportedHost || !supportedArch) {
@@ -81,7 +116,7 @@ public class CodeServer {
             URL installScriptURL = new URL("https://raw.githubusercontent.com/cdr/code-server/main/install.sh");
             FileUtils.copyURLToFile(installScriptURL, codeServerDir.resolve("code-server.sh").toFile());
             ProcessBuilder installCMD = Execute.NewCmd(
-                    "bash", codeServerDir.resolve("code-server.sh").toString(),
+                    "sh", codeServerDir.resolve("code-server.sh").toString(),
                     "--method", "standalone");
             installCMD.environment().put("HOME", codeServerDir.toAbsolutePath().toString());
             installCMD.environment().put("VERSION", "");
@@ -109,19 +144,17 @@ public class CodeServer {
     public static void startCodeServer() {
         LOGGER.info("Starting code-server");
         LOGGER.info("All command flags map to config.yaml values. (if a value is missing, you can add it to .code-server/.config/code-server/config.yaml)");
-        codeServerBuilder = Execute.NewCmd("bash", "-c",
-                codeServerDir.resolve(".local/bin/code-server").toString(),
+        codeServerBuilder = Execute.NewCmd(codeServerDir.resolve(".local/bin/code-server").toString(), "./",
                 "--disable-telemetry",
-                "--disable-update-check");
+                "--disable-update-check"
+                );
         try {
             // set HOME to codeServerDir full path
             codeServerBuilder.environment().put("HOME", codeServerDir.toAbsolutePath().toString());
             codeServerBuilder.environment().put("PATH", codeServerDir.resolve(".bin").toAbsolutePath().toString() + ":" + System.getenv("PATH"));
-            codeServerProcess = codeServerBuilder.start();
+            Execute.RunWait(codeServerBuilder);
         } catch (SecurityException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         LOGGER.info("CodeServer Setup Complete!");
     }
