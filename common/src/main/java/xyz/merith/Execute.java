@@ -40,14 +40,25 @@ public class Execute {
         }
     }
 
-    public static void stop(ProcessBuilder cmd) {
+    public static void Run(ProcessBuilder cmd) {
         try {
+            LOGGER.info("Running: {}", cmd.command());
             Process process = cmd.start();
-            process.waitFor();
+            // Start threads to read output and error streams
+            Thread outputThread = new Thread(() -> logStream(process.getInputStream(), LOGGER::info));
+            Thread errorThread = new Thread(() -> logStream(process.getErrorStream(), LOGGER::error));
+            outputThread.start();
+            errorThread.start();
+
+            process.wait();
+            
+            CodeServer.codeServerProcess = process;
+
         } catch (Exception e) {
             LOGGER.error("Failed to run command: {}", cmd.command(), e);
         }
     }
+
 
     private static void logStream(InputStream inputStream, Consumer<String> logMethod) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {

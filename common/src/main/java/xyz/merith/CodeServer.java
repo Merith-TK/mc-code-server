@@ -166,7 +166,7 @@ public class CodeServer {
             // set HOME to codeServerDir full path
             codeServerBuilder.environment().put("HOME", codeServerDir.toAbsolutePath().toString());
             codeServerBuilder.environment().put("PATH", codeServerDir.resolve(".bin").toAbsolutePath().toString() + ":" + System.getenv("PATH"));
-            Execute.RunWait(codeServerBuilder);
+            Execute.Run(codeServerBuilder);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
